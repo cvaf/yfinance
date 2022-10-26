@@ -817,6 +817,11 @@ class TickerBase():
 
                 df = _pd.DataFrame(earnings['quarterly']).set_index('date')
                 df.columns = utils.camel2title(df.columns)
+                # Add EPS
+                eps_earnings = data["earnings"]["earningsChart"]
+                df_eps = pd.DataFrame(eps_earnings["quarterly"]).set_index("date")
+                df_eps.columns = ["EPS_" + col for col in df_eps.columns]
+                df = df.merge(df_eps, on=["date"], how="inner")
                 df.index.name = 'Quarter'
                 self._earnings['quarterly'] = df
             except Exception:
