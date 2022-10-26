@@ -12,7 +12,7 @@ import io
 from os import path
 
 # --- get version ---
-version = "unknown"
+version = "0.1.0"
 with open("yfinance/version.py") as f:
     line = f.read().strip()
     version = line.replace("version = ", "").replace('"', '')
