@@ -828,7 +828,7 @@ class TickerBase():
                 )
                 df_eps = _pd.DataFrame(qe).set_index("date")
                 df_eps.columns = ["EPS_" + col for col in df_eps.columns]
-                df = df.merge(df_eps, on=["date"], how="inner")
+                df = df.merge(df_eps, on=["date"], how="right")
                 df.index.name = 'Quarter'
                 self._earnings['quarterly'] = df
             except Exception:
