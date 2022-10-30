@@ -819,7 +819,14 @@ class TickerBase():
                 df.columns = utils.camel2title(df.columns)
                 # Add EPS
                 eps_earnings = data["earnings"]["earningsChart"]
-                df_eps = _pd.DataFrame(eps_earnings["quarterly"]).set_index("date")
+                qe = eps_earnings["quarterly"]
+                qe.append(
+                    {
+                        "date": eps_earnings['currentQuarterEstimateDate']+str(eps_earnings['currentQuarterEstimateYear']), 
+                        "estimate": eps_earnings['currentQuarterEstimate']
+                    }
+                )
+                df_eps = _pd.DataFrame(qe).set_index("date")
                 df_eps.columns = ["EPS_" + col for col in df_eps.columns]
                 df = df.merge(df_eps, on=["date"], how="inner")
                 df.index.name = 'Quarter'
